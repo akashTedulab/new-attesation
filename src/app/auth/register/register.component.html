@@ -1,1 +1,233 @@
-<p>register works!</p>
+<mat-horizontal-stepper [linear]="isLinear">
+  <mat-step>
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Step 1</ng-template>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-3"></div>
+          <div class="col-xl-6">
+            <h1 style="text-align: center"> Dear Applicant,<br><br> Input your name as per your latest marksheet </h1>
+          </div>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="row mt-3">
+          <div class="col-xl-3"></div>
+          <div class="col-xl-6">
+            <label for="inputFirstName" class="form-label">First Name <span style="color:red">*</span></label>
+            <input class="form-control" type="text" placeholder="First name" aria-label="default input"
+              id="inputFirstName" formControlName="firstNameCtrl"
+              [ngClass]="{'is-invalid': firstFormGroup.controls.firstNameCtrl.invalid && (firstFormGroup.controls.firstNameCtrl.dirty || firstFormGroup.controls.firstNameCtrl.touched)}">
+          </div>
+          <div class="col-xl-3"></div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-xl-3"></div>
+          <div class="col-xl-6">
+            <label for="inputLastName" class="form-label">Last Name <span style="color:red">*</span></label>
+            <input class="form-control" type="text" placeholder="Last name" aria-label="default input"
+              id="inputLastName" formControlName="LastNameCtrl"
+              [ngClass]="{'is-invalid': firstFormGroup.controls.LastNameCtrl.invalid && (firstFormGroup.controls.LastNameCtrl.dirty || firstFormGroup.controls.LastNameCtrl.touched)}">
+          </div>
+          <div class="col-xl-3"></div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4 d-grid">
+            <button class="btn btn-primary mt-3" *ngIf="firstFormGroup.valid == true" matStepperNext>Next</button>
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Step 2</ng-template>
+      <div class="row">
+        <div class="col-xl-4"></div>
+        <div class="col-xl-4">
+          <h2 style="text-align: center">Hi {{firstFormGroup.controls.firstNameCtrl.value}},<br><br> How should we
+            address you as?</h2>
+        </div>
+        <div class="col-xl-4"></div>
+      </div>
+      <mat-radio-group formControlName="genderCtrl">
+      <div class="row">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+          <div class="container" style="cursor:pointer" (click)="radioChange('Male');">
+            <img id="boy">
+            <div style="text-align: center">
+              <mat-radio-button value="Male" id="Male_value" required (change)="radioChange('Male');">Mr. (Male)</mat-radio-button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3">
+          <div class="container" style="cursor:pointer" (click)="radioChange('Female');">
+            <img id="girl">
+            <div style="text-align: center">
+              <mat-radio-button value="Female" id="Female_value" required (change)="radioChange('Female');">Ms. (Female)</mat-radio-button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-xl-5"></div>
+        <div class="col-xl-2">
+          <div class="container" style="cursor:pointer" (click)="radioChange('Transgender');">
+            <img id="Transgender">
+            <div style="text-align: center">
+              <mat-radio-button value="Transgender" id="Transgender_value" required (change)="radioChange('Transgender');">Others</mat-radio-button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5"></div>
+      </div>
+    </mat-radio-group>
+      <div>
+        <div class="row">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4"><button class="btn btn-primary fbtn mt-3" matStepperPrevious>Previous</button></div>
+          <div class="col-xl-4"><button class="btn btn-primary fbtn mt-3" *ngIf="secondFormGroup.controls.genderCtrl.valid == true" matStepperNext>Next</button></div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Step 3</ng-template>
+      <div class="row">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-6">
+          <h2 style="text-align: center;">Hi {{initials_gender}} {{firstFormGroup.controls.firstNameCtrl.value}},<br><br> Let's set up your
+            login credentials.</h2>
+        </div>
+        <div class="col-xl-3"></div>
+      </div>
+      <div class="row">
+        <div class="row">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4">
+            <div class="form-group">
+              <label for="inputEmail">Applicant's Email ID <span style="color:red;">*</span></label>
+              <br />
+              <input type="text" placeholder="Enter your email" class="form-control mt-2" formControlName="emailCtrl"
+                [ngClass]="{'is-invalid': thirdFormGroup.controls.emailCtrl.invalid && (thirdFormGroup.controls.emailCtrl.dirty || thirdFormGroup.controls.emailCtrl.touched)}">
+            </div>
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-2">
+            <div class="form-group">
+              <label for="inputEmail">Password <span style="color:red;">*</span></label>
+              <br />
+              <div class="d-flex">
+                <div class="input-group">
+                  <input [type]="isTextFieldType ? 'text' : 'password'" class="form-control" class="form-control" id="inputPassWord" formControlName="passwordCtrl"
+                  [ngClass]="{'is-invalid': thirdFormGroup.controls.passwordCtrl.invalid && (thirdFormGroup.controls.passwordCtrl.dirty || thirdFormGroup.controls.passwordCtrl.touched)}"
+                  placeholder="Password">
+                  <div class="input-group-append" (click)="showHidePassword()">
+                    <span class="input-group-text">
+                      <i [class] ="isTextFieldType ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></i>
+                    </span>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2">
+            <div class="form-group">
+              <label for="inputEmail">Confirm Password <span style="color:red;">*</span></label>
+              <br />
+              <div class="d-flex">
+                <div class="input-group">
+                  <input [type]="textFieldTypee ? 'text' : 'password'" class="form-control" nbInput id="inputRePassWord"
+                  formControlName="repasswordCtrl"
+                  [ngClass]="{'is-invalid': thirdFormGroup.controls.repasswordCtrl.invalid && (thirdFormGroup.controls.repasswordCtrl.dirty || thirdFormGroup.controls.repasswordCtrl.touched)}"
+                  placeholder="Re- Type Password">
+                  <div class="input-group-append" (click)="showHideConfirmPassword()">
+                      <span class="input-group-text">
+                        <i [class] ="textFieldTypee ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"></i>
+                      </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-2"></div>
+          <div class="col-xl-2"> <div class="text-danger mt-2" *ngIf="thirdFormGroup.controls.repasswordCtrl.touched && (thirdFormGroup.controls.passwordCtrl.value !== thirdFormGroup.controls.repasswordCtrl.value)">Password doesn't matched</div></div>
+          <div class="col-xl-4"></div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4">
+            <label for="inputEmail"> Country Code and Mobile Number <span style="color:red;">*</span></label>
+            <input type="text" placeholder="Mobile No" class="form-control mt-2" formControlName="phoneCtrl"
+              [ngClass]="{'is-invalid': thirdFormGroup.controls.phoneCtrl.invalid && (thirdFormGroup.controls.phoneCtrl.dirty ||  thirdFormGroup.controls.phoneCtrl.touched)}">
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck">
+              <label class="form-check-label" for="gridCheck">
+                Same as WhatsApp No?
+              </label>
+            </div>
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-xl-5"></div>
+          <div class="col-xl-2">
+            <input type="text" class="form-control" placeholder="captcha">
+            <mat-icon style="margin-left: 120px;">autorenew</mat-icon>
+          </div>
+          <div class="col-xl-5"></div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4">
+            <input type="text" class="form-control" placeholder="Enter Capthca here" formControlName="captchaCtrl"
+              [ngClass]="{'is-invalid': thirdFormGroup.controls.captchaCtrl.invalid && (thirdFormGroup.controls.captchaCtrl.dirty ||  thirdFormGroup.controls.captchaCtrl.touched)}">
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4 d-grid">
+            <button class="btn btn-primary btn-block" type="submit" (click)='register()'
+              [disabled]="isValidThirdForm">PROCEED</button>
+          </div>
+          <div class="col-xl-4"></div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4"></div>
+          <div class="col-xl-4"> <div class="text-danger alert alert-danger mt-3" *ngIf="thirdFormGroup.invalid && thirdFormGroup.touched">Please Fill all the details</div></div>
+          <div class="col-xl-4"></div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<div class="container">
+  <div class="row ms-5">
+    <div class="col-xl-4"></div>
+    <div class="col-xl-4">
+      <h3>Already have an account? <a style="color:DodgerBlue;" class="text-link" routerLink="/login">Log in</a></h3>
+    </div>
+    <div class="col-xl-4"></div>
+  </div>
+</div>
